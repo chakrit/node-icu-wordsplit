@@ -6,8 +6,8 @@
 , "repository": { "url": "git://github.com/chakrit/node-icu-wordsplit.git" }
 , "main": "node-icu-wordsplit.js"
 , "dependencies": { }
-, "devDependencies": { }
 , "optionalDependencies": { }
+, "devDependencies": { "winston": "latest" }
 , "engines": { "node": "*" }
 , "scripts":
   { "preinstall": "node-waf clean || (exit 0); node-waf configure build"
