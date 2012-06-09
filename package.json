@@ -7,7 +7,9 @@
 , "main": "node-icu-wordsplit.js"
 , "dependencies": { }
 , "optionalDependencies": { }
-, "devDependencies": { "winston": "latest" }
+, "devDependencies":
+  { "underscore": "latest"
+  , "chai": "latest" }
 , "engines":
   { "node": ">= 0.6"
   , "npm": ">= 1.1" }
