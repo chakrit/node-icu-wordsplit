@@ -3,8 +3,16 @@
 (function() {
 
   var util = require('util')
-    , ws = require('./node-icu-wordsplit');
+    , log = require('winston')
+    , ws = require('./node-icu-wordsplit')
+    , log = console.log;
 
-  console.log(util.inspect(ws));
+  // some test strings
+  var strings =
+    [ "The quick brown fox jumps over the lazy dog."
+    , "เดอะควิกบราวน์ฟอกซ์จัมป์โอเวอร์เดอะเลซี่ด็อก" ];
+
+  // prerequisite tests
+  log(util.inspect(ws));
 
 })();
