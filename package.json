@@ -4,7 +4,7 @@
 , "version": "0.1.0"
 , "homepage": "https://github.com/chakrit/node-icu-wordsplit"
 , "repository": { "url": "git://github.com/chakrit/node-icu-wordsplit.git" }
-, "main": "wordsplit.js"
+, "main": "node-icu-wordsplit.js"
 , "dependencies": { }
 , "devDependencies": { }
 , "optionalDependencies": { }

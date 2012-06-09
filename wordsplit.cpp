@@ -5,6 +5,7 @@ using namespace v8;
 using namespace node;
 
 static void Init(Handle<Object> exports) {
+  exports->Set(String::New("Hello"), String::New("World"));
 }
 
 // mandatory node register calls
