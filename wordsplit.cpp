@@ -1,11 +1,13 @@
+
+// node includes
 #include <v8.h>
 #include <node.h>
 
-using namespace v8;
-using namespace node;
+// ICU includes
+#include <unicode/utypes.h>
 
-static void Init(Handle<Object> exports) {
-  exports->Set(String::New("Hello"), String::New("World"));
+static void Init(v8::Handle<v8::Object> exports) {
+  exports->Set(v8::String::New("Hello"), v8::String::New("World"));
 }
 
 // mandatory node register calls
