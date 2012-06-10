@@ -33,41 +33,42 @@ SplitWords(const v8::Arguments &args) {
   v8::Local<v8::String> localeStr(args[0]->ToString());
   v8::Local<v8::String> textStr(args[1]->ToString());
   const char *localeArg = *v8::String::AsciiValue(localeStr);
-  uint16_t *textBuffer = *v8::String::Value(textStr);
 
-  UnicodeString text(textBuffer);
+  v8::String::Value textValue(textStr);
+  const uint16_t *textBuffer = *textValue;
+
+  UnicodeString text(textBuffer, textStr->Utf8Length());
   if (text.isBogus()) { return Throw("Failed to create UnicodeString."); }
 
   // prepare iterator
-  UErrorCode err;
+  UErrorCode err = U_ZERO_ERROR;
   Locale locale = Locale::createFromName(localeArg);
 
   BreakIterator *iter = BreakIterator::createWordInstance(locale, err);
-  if (!U_SUCCESS(err)) {
+  if (U_FAILURE(err)) {
     ErrorCode errCode;
     errCode.set(err);
 
     return Throw(errCode.errorName());
   }
 
+  iter->setText(text);
+
   // iterate and store results
   v8::Local<v8::Array> results(v8::Array::New());
-  int resultsIdx = 0;
+  int resultIdx = 0;
   int previousIdx = 0;
   int idx = -1;
 
   while ((idx = iter->next()) != -1) {
+    const uint16_t *wordStart = textBuffer + previousIdx;
     v8::Local<v8::String> word;
 
-    int count = idx - previousIdx;
-    word = v8::String::New(textBuffer + previousIdx, idx - previousIdx);
-    results->Set(resultsIdx++, word);
-
+    results->Set(resultIdx++, v8::String::New(wordStart, idx - previousIdx));
     previousIdx = idx;
   }
 
   // finish
-  delete textBuffer;
   delete iter;
   return scope.Close(results);
 }
