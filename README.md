@@ -15,11 +15,27 @@ headers and binaries in your default build path.
 
 Afterwards, switch to your project folder and
 
-    npm install node-icu-wordsplit
+    npm install icu-wordsplit
 
-And you should now be able to `require('node-icu-wordsplit')` in your code.
+And you should now be able to `require('icu-wordsplit')` in your code.
 
 ## API
 
-TODO:
+Right now the only function call available is exported from the module.
+
+**NOTE:** The function requires *exactly* TWO arguments.
+
+    var splitWord = require('icu-wordsplit');
+
+    var results = splitWord('en_US', 'The quick brown fox jumps over the lazy dog.');
+    for (var i = 0; i < results.length; i++) {
+      console.log(results[i]);
+    }
+
+The first argument is the locale. You *must* specify an ICU-compatible locale name here.
+The second argument is the string to which to split.
+
+The function will returns an array of words. Whitespaces and some common punctuations
+may be automatically removed from the list.
+
 
