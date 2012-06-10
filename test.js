@@ -15,8 +15,11 @@
 
   var texts =
     [ text('en_US', 'The quick brown fox jumps over the lazy dog.')
+    , text('en_US', 'This is just a quick quick test sentence.')
+    , text('ja_JP', 'わたしはじぶんのなまえにわすれてしまった')
+    , text('th_TH', 'สมเด็จพระนเรศวรมหาราชทรงครองราชยาวนานถึงห้าพันปี')
     , text('th_TH', 'เดอะควิกบราวน์ฟอกซ์จัมป์โอเวอร์เดอะเลซี่ด็อก')
-    , text('th_TH', 'สมเด็จพระนเรศวรมหาราชทรงครองราชยาวนานถึงห้าพันปี') ];
+    , text('th_TH', 'ยูนิโค้ดในภาษาซีนี่มันนรกชัดๆ ปวดหัวจริงๆ') ];
 
   // delayed function call (for exception testing.)
   var ws_ = function() {
@@ -25,14 +28,18 @@
   };
 
   // test preconditions
-  /*expect(ws).to.be.a('function');
+  expect(ws).to.be.a('function');
   expect(ws_()).to.throws(/locale/);
   expect(ws_('th_TH')).to.throws(/text/).and.not.to.throws(/locale/);
-  expect(ws_('th_TH', 'text')).to.not.throws();*/
+  expect(ws_('th_TH', 'text')).to.not.throws();
 
   // test results
   var results = _.map(texts, function(value) {
-    return ws(value.locale, value.text);
+    var result = ws(value.locale, value.text);
+
+    console.log(value.locale + ' ' + value.text);
+    console.log(result);
+    return result;
   });
 
   expect(results[0]).to.exist;
