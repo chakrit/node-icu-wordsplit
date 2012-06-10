@@ -48,11 +48,7 @@
   expect(results[0][7]).to.equal('lazy');
   expect(results[0][8]).to.equal('dog');
 
-  /* expect(results[1]).to.exist;
-  expect(results[2]).to.exist;*/
-
-  // test inner workings
-  // kk
+  // TODO: More tests
 
   console.log("All green.");
 
