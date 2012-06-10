@@ -22,6 +22,6 @@ def configure(ctx):
 def build(ctx):
   t = ctx.new_task_gen('cxx', 'shlib', 'node_addon')
   t.uselib = 'ICU'
-  t.source = ['wordsplit.cpp']
+  t.source = ['wordsplit.cc']
   t.target = 'wordsplit'
 

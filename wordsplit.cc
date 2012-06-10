@@ -32,7 +32,7 @@ SplitWords(const v8::Arguments &args) {
   // prepare ICU-compatible strings
   v8::Local<v8::String> localeStr(args[0]->ToString());
   v8::Local<v8::String> textStr(args[1]->ToString());
-  const char *localeArg = *v8::String::Utf8Value(localeStr);
+  const char *localeArg = *v8::String::AsciiValue(localeStr);
   uint16_t *textBuffer = *v8::String::Value(textStr);
 
   UnicodeString text(textBuffer);
