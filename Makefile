@@ -1,6 +1,7 @@
 default:
-	@echo 
 	node-waf configure
+	@echo 
+	node-waf clean
 	@echo 
 	node-waf build
 	@echo 
