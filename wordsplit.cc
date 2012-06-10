@@ -36,8 +36,9 @@ SplitWords(const v8::Arguments &args) {
 
   v8::String::Value textValue(textStr);
   const uint16_t *textBuffer = *textValue;
+  if (textBuffer == NULL) { return Throw("Error obtaining unicode string from v8::String."); }
 
-  UnicodeString text(textBuffer, textStr->Utf8Length());
+  UnicodeString text(textBuffer, textStr->Length());
   if (text.isBogus()) { return Throw("Failed to create UnicodeString."); }
 
   // prepare iterator
@@ -55,7 +56,8 @@ SplitWords(const v8::Arguments &args) {
   iter->setText(text);
 
   // iterate and store results
-  v8::Local<v8::Array> results(v8::Array::New());
+  v8::Local<v8::Array> results = v8::Array::New();
+  //v8::Local<v8::Array> results(v8::Array::New());
   int resultIdx = 0;
   int previousIdx = 0;
   int idx = -1;
