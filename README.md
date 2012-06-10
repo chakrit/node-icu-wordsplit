@@ -38,4 +38,13 @@ The second argument is the string to which to split.
 The function will returns an array of words. Whitespaces and some common punctuations
 may be automatically removed from the list.
 
+## TODO / CONTRIBUTE
+
+All contributions welcome!
+
+Here's something to do:
+
+* More tests with more languages.
+* Add more ICU functionality (like locale auto-detection.)
+* Multiple locale support? (remove the need for locale parameter.)
 
