@@ -8,7 +8,7 @@
   var splitWords = require('./build/default/wordsplit.node').splitWords;
 
   // TODO: Use ICU data for better rejecting useless parts?
-  var REJECT = /^[ \.\!\?\:\;]*$/;
+  var REJECT = /^[ \.\!\?\:\;\r\n]*$/;
 
   // adds precondition checks (easier to do via JS)
   module.exports = (function(split) {
