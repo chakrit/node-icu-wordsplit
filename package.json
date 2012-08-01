@@ -1,7 +1,7 @@
 { "author": "Chakrit Wichian <service@chakrit.net> (http://chakrit.net)"
 , "name": "icu-wordsplit"
 , "description": "Node.js bindings to the ICU project boundary analysis module. Useful for breaking up words in many many international languages."
-, "version": "0.1.1"
+, "version": "0.1.2"
 , "homepage": "https://github.com/chakrit/node-icu-wordsplit"
 , "repository": { "url": "git://github.com/chakrit/node-icu-wordsplit.git" }
 , "main": "node-icu-wordsplit.js"
