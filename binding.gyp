@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "wordsplit",
-      "ldflags": "-lpthread -lm -licu18n -licuuc -licudata",
+      "libraries": ["libpthread.dylib", "libm.dylib", "libicui18n.dylib", "libicuuc.dylib", "libicudata.dylib"],
       "sources": ["wordsplit.cc"]
     }
   ]
