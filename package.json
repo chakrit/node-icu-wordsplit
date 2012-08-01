@@ -14,6 +14,6 @@
   { "node": ">= 0.6"
   , "npm": ">= 1.1" }
 , "scripts":
-  { "preinstall": "node-waf clean || (exit 0); node-waf configure build"
-  , "test": "test.js" }
+  { "preinstall": "node-gyp clean -v && node-gyp configure -v && node-gyp build -v"
+  , "test": "node test.js" }
 }
