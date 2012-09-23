@@ -23,20 +23,30 @@ And you should now be able to `require('icu-wordsplit')` in your code.
 
 Right now the only function call available is exported from the module.
 
-**NOTE:** The function requires *exactly* TWO arguments.
+#### splitWords ( [locale], string )
 
-    var splitWord = require('icu-wordsplit');
+Splits the specified string into words using ICU-defined word boundary.
 
-    var results = splitWord('en_US', 'The quick brown fox jumps over the lazy dog.');
-    for (var i = 0; i < results.length; i++) {
-      console.log(results[i]);
-    }
+    var splitWords = require('icu-wordsplit');
+
+    var results = splitWords('The quick brown fox jumps over the lazy dog.');
+    console.log(results);
+
+    results = splitWords('th_TH', 'แยกคำภาษาไทยก็ทำได้นะจ้ะ');
+    console.log(results);
 
 The first argument is the locale. You *must* specify an ICU-compatible locale name here.
+However, this argument is now optional as you can use `en_US` to split most
+strings without problem.
+
 The second argument is the string to which to split.
 
 The function will returns an array of words. Whitespaces and some common punctuations
 may be automatically removed from the list.
+
+## LICENSE
+
+BSD
 
 ## TODO / CONTRIBUTE
 
@@ -46,5 +56,4 @@ Here's something to do:
 
 * More tests with more languages.
 * Add more ICU functionality (like locale auto-detection.)
-* Multiple locale support? (remove the need for locale parameter.)
 

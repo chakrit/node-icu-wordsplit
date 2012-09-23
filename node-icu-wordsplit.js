@@ -13,8 +13,15 @@
   // adds precondition checks (easier to do via JS)
   module.exports = (function(split) {
     return function(locale, text) {
+      if (!text) {
+        text = locale;
 
-      if (!locale) throw Error('locale argument is required.');
+        // defaulting to en_US since ICU seems to be able to handle
+        // any language regardless of what locale we give it
+        // not quite sure why ICU api even need this in the first place
+        locale = 'en_US';
+      }
+
       if (!text) throw Error('text argument is required.');
 
       // make sure we have a string
