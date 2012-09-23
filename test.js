@@ -31,8 +31,8 @@
 
   // test preconditions
   expect(ws).to.be.a('function');
-  expect(ws_()).to.throws(/locale/);
-  expect(ws_('th_TH')).to.throws(/text/).and.not.to.throws(/locale/);
+  expect(ws_()).to.throws(/text/);
+  expect(ws_('text')).to.not.throws()
   expect(ws_('th_TH', 'text')).to.not.throws();
 
   // test results
@@ -52,6 +52,8 @@
 
   // TODO: More tests
 
-  console.log("All green.");
+  console.log("");
+  console.log("Please manually check the above results.");
+  console.log("Otherwise, this looks all green to me.");
 
 })();
