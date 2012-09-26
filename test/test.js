@@ -6,7 +6,7 @@
     , util = require('util')
     , fs = require('fs')
     , expect = require('chai').expect
-    , ws = require('./node-icu-wordsplit')
+    , ws = require('../node-icu-wordsplit')
     , log = console.log;
 
   // some test strings
