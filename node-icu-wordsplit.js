@@ -29,7 +29,7 @@
       text = "" + text;
 
       // should be safe to venture into C land by now
-      var rawResults = split(locale, text)
+      var rawResults = split(locale, text) || null
         , results = [];
 
       // filter out common chars and empty entries
