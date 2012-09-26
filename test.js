@@ -21,7 +21,7 @@
     , text('th_TH', 'สมเด็จพระนเรศวรมหาราชทรงครองราชยาวนานถึงห้าพันปี')
     , text('th_TH', 'เดอะควิกบราวน์ฟอกซ์จัมป์โอเวอร์เดอะเลซี่ด็อก')
     , text('th_TH', 'ยูนิโค้ดในภาษาซีนี่มันนรกชัดๆ ปวดหัวจริงๆ')
-    , text('th_TH', fs.readFileSync('./test_th_long.txt')) ];
+    , text('th_TH', fs.readFileSync('./test_th_long.txt').toString()) ];
 
   // delayed function call (for exception testing.)
   var ws_ = function() {
@@ -37,10 +37,19 @@
 
   // test results
   var results = _.map(texts, function(value) {
-    var result = ws(value.locale, value.text);
+    var result = ws(value.locale, value.text)
+      , msg = '';
 
-    console.log(value.locale + ' ' + value.text);
-    console.log(result);
+    for (var i = 0; i < result.length; i++)
+      msg += result + ' ';
+
+    console.log('===');
+    console.log(value.locale);
+    console.log('---');
+    console.log(value.text);
+    console.log('---');
+    console.log(msg);
+    console.log('===');
     return result;
   });
 
