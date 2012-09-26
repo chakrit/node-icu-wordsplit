@@ -14,6 +14,6 @@
   { "node": ">= 0.6"
   , "npm": ">= 1.1" }
 , "scripts":
-  { "preinstall": "node-gyp clean -v && node-gyp configure -v && node-gyp build -v"
+  { "preinstall": "node-gyp clean && node-gyp configure && node-gyp build"
   , "test": "node test.js" }
 }
