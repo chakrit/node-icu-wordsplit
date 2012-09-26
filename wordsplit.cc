@@ -30,20 +30,23 @@ SplitWords(const v8::Arguments &args) {
   v8::HandleScope scope;
 
   // prepare ICU-compatible strings
-  v8::Local<v8::String> localeStr(args[0]->ToString());
-  v8::Local<v8::String> textStr(args[1]->ToString());
-  const char *localeArg = *v8::String::AsciiValue(localeStr);
+  v8::Local<v8::String> localeArg(args[0]->ToString());
+  v8::Local<v8::String> textArg(args[1]->ToString());
 
-  v8::String::Value textValue(textStr);
-  const uint16_t *textBuffer = *textValue;
-  if (textBuffer == NULL) { return Throw("Error obtaining unicode string from v8::String."); }
+  v8::String::AsciiValue localeArgValue(localeArg);
+  v8::String::Value textArgValue(textArg);
 
-  UnicodeString text(textBuffer, textStr->Length());
-  if (text.isBogus()) { return Throw("Failed to create UnicodeString."); }
+  const char *cLocaleArg = *localeArgValue;
+  const uint16_t *cTextArg = *textArgValue;
+
+  if (cTextArg == NULL) { return Throw("Error obtaining unicode string from v8::String."); }
+
+  UnicodeString uTextArg(cTextArg, textArg->Length());
+  if (uTextArg.isBogus()) { return Throw("Failed to create UnicodeString."); }
 
   // prepare iterator
   UErrorCode err = U_ZERO_ERROR;
-  Locale locale = Locale::createFromName(localeArg);
+  Locale locale = Locale::createFromName(cLocaleArg);
 
   BreakIterator *iter = BreakIterator::createWordInstance(locale, err);
   if (U_FAILURE(err)) {
@@ -53,17 +56,16 @@ SplitWords(const v8::Arguments &args) {
     return Throw(errCode.errorName());
   }
 
-  iter->setText(text);
+  iter->setText(uTextArg);
 
   // iterate and store results
   v8::Local<v8::Array> results = v8::Array::New();
-  //v8::Local<v8::Array> results(v8::Array::New());
   int resultIdx = 0;
   int previousIdx = 0;
   int idx = -1;
 
   while ((idx = iter->next()) != -1) {
-    const uint16_t *wordStart = textBuffer + previousIdx;
+    const uint16_t *wordStart = cTextArg + previousIdx;
     v8::Local<v8::String> word;
 
     results->Set(resultIdx++, v8::String::New(wordStart, idx - previousIdx));
@@ -79,6 +81,8 @@ SplitWords(const v8::Arguments &args) {
 // module setup
 static void
 Init(v8::Handle<v8::Object> exports) {
+  v8::HandleScope scope;
+
   if (!ft_splitWords_once) {
     ft_splitWords = v8::Persistent<v8::FunctionTemplate>::New(v8::FunctionTemplate::New(SplitWords));
     ft_splitWords_once = true;
