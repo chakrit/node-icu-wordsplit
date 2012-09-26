@@ -10,7 +10,7 @@
     , results = ws(locale, text);
 
   for (var i = 0; i < results.length; i++) {
-    cosnole.log(results[i]);
+    console.log(results[i]);
   }
 
 })();

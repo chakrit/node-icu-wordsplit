@@ -1,5 +1,5 @@
 #!/bin/sh
 
 cd .. && ./build.sh && cd test
-valgrind --trace-children=yes --leak-check=full node test-simple.js
+valgrind $1 $2 $3 node test-simple.js
 
