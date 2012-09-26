@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cd ..
 node-gyp clean && \
   node-gyp configure && \
   node-gyp build && \
