@@ -11,7 +11,7 @@ configure:
 	$(GYP) configure
 
 all: clean configure
-	$(GYP) build
+	$(GYP) build --verbose
 	mkdir -p lib
 	cp ./build/Release/wordsplit.node lib/
 
