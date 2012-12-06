@@ -52,8 +52,15 @@ BSD
 
 All contributions welcome!
 
+Compile and run tests with
+
+```sh
+make test
+```
+
 Here's something to do:
 
 * More tests with more languages.
 * Add more ICU functionality (like locale auto-detection.)
+* Fix gyp and C++ build problems once and for all.
 
