@@ -1,4 +1,6 @@
 
+#include <stdio.h>
+
 // node includes
 #include <v8.h>
 #include <node.h>
@@ -7,9 +9,6 @@
 #include <unicode/brkiter.h>
 #include <unicode/errorcode.h>
 #include <unicode/unistr.h>
-
-
-#define WS_THROW(msg) v8::ThrowException(v8::Exception::Error(v8::String::New(msg)))
 
 
 // function template
