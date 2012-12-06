@@ -1,5 +1,5 @@
 
-// test-simple.js - Simple tests for tracing leaks
+// leaktest.js - Simple looped invocation for testing leaks.
 (function() {
 
   var ws = require('../node-icu-wordsplit')
