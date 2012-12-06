@@ -5,7 +5,7 @@
 //   to export a function object directly from a native module.
 (function() {
 
-  var splitWords = require('./build/Release/wordsplit.node').splitWords;
+  var splitWords = require('../lib/wordsplit.node').splitWords;
 
   // TODO: Use ICU data for better rejecting useless parts?
   var REJECT = /^[ \.\!\?\:\;\r\n]*$/;

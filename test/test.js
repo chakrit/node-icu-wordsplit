@@ -6,7 +6,7 @@
     , util = require('util')
     , fs = require('fs')
     , expect = require('chai').expect
-    , ws = require('../node-icu-wordsplit')
+    , ws = require('../index')
     , log = console.log;
 
   // some test strings
@@ -21,7 +21,7 @@
     , text('th_TH', 'สมเด็จพระนเรศวรมหาราชทรงครองราชยาวนานถึงห้าพันปี')
     , text('th_TH', 'เดอะควิกบราวน์ฟอกซ์จัมป์โอเวอร์เดอะเลซี่ด็อก')
     , text('th_TH', 'ยูนิโค้ดในภาษาซีนี่มันนรกชัดๆ ปวดหัวจริงๆ')
-    , text('th_TH', fs.readFileSync('./test_th_long.txt').toString()) ];
+    , text('th_TH', fs.readFileSync(__dirname + '/test_th_long.txt').toString()) ];
 
   // delayed function call (for exception testing.)
   var ws_ = function() {

@@ -1,18 +1,21 @@
 
-GYP=./node_modules/.bin/node-gyp
+GYP = node-gyp
 
 default: all
 
 clean:
 	$(GYP) clean
+	rm -Rf lib
 
 configure:
 	$(GYP) configure
 
 all: clean configure
 	$(GYP) build
+	mkdir -p lib
+	cp ./build/Release/wordsplit.node lib/
 
-test:
+test: all
 	node test/test.js
 
 leaktest: all

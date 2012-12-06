@@ -2,7 +2,7 @@
 // leaktest.js - Simple looped invocation for testing leaks.
 (function() {
 
-  var ws = require('../node-icu-wordsplit')
+  var ws = require('../index')
     , log = console.log;
 
   var locale = 'ja_JP'
