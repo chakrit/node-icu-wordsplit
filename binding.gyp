@@ -3,8 +3,9 @@
     {
       "target_name": "wordsplit",
       "sources": ["src/wordsplit.cc"],
-      "libraries": ["$(icu-config --ldflags)"],
-      "cflags_cc": ["-fno-exceptions", "$(icu-config --cppflags)"]
+      "cflags!": ["-fno-exceptions", "`icu-config --cflags`"],
+      "cflags_cc!": ["-fno-exceptions", "`icu-config --cppflags`"],
+      "libraries": ["`icu-config --ldflags`"]
     }
   ]
 }
