@@ -1,7 +1,7 @@
 
 GYP = node-gyp
 
-default: all
+default: test
 
 clean:
 	$(GYP) clean
