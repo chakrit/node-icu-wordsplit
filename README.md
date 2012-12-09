@@ -2,16 +2,20 @@
 
 First, install libicu from source (so you have all the needed headers and binaries)
 
-    wget http://download.icu-project.org/files/icu4c/49.1.2/icu4c-49_1_2-src.tgz
-    tar -xvzf icu4c-49_1_2-src.tgz
+```sh
+wget http://download.icu-project.org/files/icu4c/50.1/icu4c-50_1-src.tgz
+tar -xvzf icu4c-50_1-src.tgz
 
-    cd icu/source
-    ./configure
-    make
-    make install
+cd icu/source
+./configure
+make
+make install # or sudo make isntall
+
+ldconfig # refresh linker cache
+```
 
 This will take a while. After it finishes you should have all the required ICU
-headers and binaries in your default build path.
+headers and binaries in your default build path ready to be used.
 
 Afterwards, switch to your project folder and
 
