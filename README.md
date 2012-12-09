@@ -9,7 +9,7 @@ tar -xvzf icu4c-50_1-src.tgz
 cd icu/source
 ./configure
 make
-make install # or sudo make isntall
+make install # or sudo make install
 
 ldconfig # refresh linker cache
 ```
