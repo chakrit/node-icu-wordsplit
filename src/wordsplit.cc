@@ -1,5 +1,4 @@
 #include <nan.h>
-#include <stdio.h>
 // ICU includes
 #include <unicode/brkiter.h>
 #include <unicode/errorcode.h>
@@ -17,8 +16,15 @@ using v8::String;
 // v8 shim
 // NOTE: arguments precondition checked in js wrapper file
 void SplitWords(const Nan::FunctionCallbackInfo<Value>& info) {
+  // Ignore the first parameter if we have 2 because ICU works great with en_US locale
   const char *cLocaleArg = "en_US";
-  Local<String> text = info[0]->ToString(Nan::GetCurrentContext()).ToLocalChecked();
+  int textIndex;
+  if (args.Length() == 2) {
+      textIndex = 1;
+  } else {
+      textIndex = 0;
+  }
+  Local<String> text = info[textIndex]->ToString(Nan::GetCurrentContext()).ToLocalChecked();
 
   uint16_t *cTextArg = new uint16_t[text->Length()+1];
   text->Write(cTextArg, 0, text->Length());
@@ -30,8 +36,6 @@ void SplitWords(const Nan::FunctionCallbackInfo<Value>& info) {
   }
 
   icu::UnicodeString uTextArg(cTextArg, text->Length());
-  printf("Text length: %d\n", text->Length());
-  fflush(stdout);
   if (uTextArg.isBogus()) {
     Nan::ThrowError("Failed to create UnicodeString");
     delete cTextArg;
