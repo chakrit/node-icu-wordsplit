@@ -19,7 +19,7 @@ void SplitWords(const Nan::FunctionCallbackInfo<Value>& info) {
   // Ignore the first parameter if we have 2 because ICU works great with en_US locale
   const char *cLocaleArg = "en_US";
   int textIndex;
-  if (args.Length() == 2) {
+  if (info.Length() == 2) {
       textIndex = 1;
   } else {
       textIndex = 0;
