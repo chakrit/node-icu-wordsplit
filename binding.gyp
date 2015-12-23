@@ -4,12 +4,10 @@
       "target_name": "wordsplit",
       "sources": ["src/wordsplit.cc"],
       "libraries": ["<!@(icu-config --ldflags)"],
-      "cflags": ["<!@(icu-config --cppflags)"],
-      "conditions": [
-        ['OS=="mac"', {
-          "OTHER_CFLAGS": ["<!@(icu-config --cppflags)"]
-        }]
-      ]
+      'include_dirs': [
+        '<!@(icu-config --cppflags-searchpath)',
+        '<!(node -e "require(\'nan\')")'
+      ],
     }
   ]
 }

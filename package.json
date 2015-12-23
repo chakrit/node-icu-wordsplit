@@ -8,7 +8,9 @@
     "url": "git://github.com/chakrit/node-icu-wordsplit.git"
   },
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "nan": "^2.1.0"
+  },
   "optionalDependencies": {},
   "devDependencies": {
     "underscore": "latest",
