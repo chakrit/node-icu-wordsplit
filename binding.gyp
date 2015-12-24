@@ -4,11 +4,12 @@
       "target_name": "wordsplit",
       "sources": ["src/wordsplit.cc"],
       "libraries": ["<!@(icu-config --ldflags)"],
-      'include_dirs': [
+      "cflags": ["<!(icu-config --cppflags)"],
+      "include_dirs": [
         '<!(node -e "require(\'nan\')")'
       ],
-      'xcode_settings': {
-        'OTHER_CFLAGS': [
+      "xcode_settings": {
+        "OTHER_CFLAGS": [
           "<!(icu-config --cppflags)",
         ],
       },
