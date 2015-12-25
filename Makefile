@@ -4,22 +4,22 @@ GYP = node-gyp
 default: test
 
 clean:
-	$(GYP) clean
-	rm -Rf lib
+	@$(GYP) clean
+	@rm -Rf lib
 
 configure:
-	$(GYP) configure
+	@$(GYP) configure
 
 all: clean configure
-	$(GYP) build --verbose
-	mkdir -p lib
-	cp ./build/Release/wordsplit.node lib/
+	@$(GYP) build --verbose
+	@mkdir -p lib
+	@cp ./build/Release/wordsplit.node lib/
 
 test: all
-	node test/test.js
+	@node test/test.js
 
 leaktest: all
-	valgrind node test/leaktest.js
+	@valgrind node test/leaktest.js
 
 .PHONY: all test clean default leaktest
 

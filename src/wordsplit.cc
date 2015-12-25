@@ -1,47 +1,46 @@
-
-#include <stdio.h>
-
-// node includes
-#include <v8.h>
-#include <node.h>
-
+#include <nan.h>
 // ICU includes
 #include <unicode/brkiter.h>
 #include <unicode/errorcode.h>
 #include <unicode/unistr.h>
 
+namespace wordsplit {
 
-// function template
-static v8::Persistent<v8::FunctionTemplate> ft_splitWords;
-static bool ft_splitWords_once = false;
-
-
-static v8::Handle<v8::Value>
-Throw(const char *message) {
-  return v8::ThrowException(v8::Exception::Error(v8::String::New(message)));
-}
-
+using v8::Value;
+using v8::Local;
+using v8::FunctionTemplate;
+using v8::Object;
+using v8::Array;
+using v8::String;
 
 // v8 shim
 // NOTE: arguments precondition checked in js wrapper file
-static v8::Handle<v8::Value>
-SplitWords(const v8::Arguments &args) {
-  v8::HandleScope scope;
+void SplitWords(const Nan::FunctionCallbackInfo<Value>& info) {
+  // Ignore the first parameter if we have 2 because ICU works great with en_US locale
+  const char *cLocaleArg = "en_US";
+  int textIndex;
+  if (info.Length() == 2) {
+      textIndex = 1;
+  } else {
+      textIndex = 0;
+  }
+  Local<String> text = info[textIndex]->ToString(Nan::GetCurrentContext()).ToLocalChecked();
 
-  // prepare ICU-compatible strings
-  v8::Local<v8::String> localeArg(args[0]->ToString());
-  v8::Local<v8::String> textArg(args[1]->ToString());
+  uint16_t *cTextArg = new uint16_t[text->Length()+1];
+  text->Write(cTextArg, 0, text->Length());
 
-  v8::String::AsciiValue localeArgValue(localeArg);
-  v8::String::Value textArgValue(textArg);
+  if (cTextArg == NULL) {
+    Nan::ThrowError("Error obtaining unicode string from v8::String");
+    delete cTextArg;
+    return;
+  }
 
-  const char *cLocaleArg = *localeArgValue;
-  const uint16_t *cTextArg = *textArgValue;
-
-  if (cTextArg == NULL) { return Throw("Error obtaining unicode string from v8::String."); }
-
-  UnicodeString uTextArg(cTextArg, textArg->Length());
-  if (uTextArg.isBogus()) { return Throw("Failed to create UnicodeString."); }
+  icu::UnicodeString uTextArg(cTextArg, text->Length());
+  if (uTextArg.isBogus()) {
+    Nan::ThrowError("Failed to create UnicodeString");
+    delete cTextArg;
+    return;
+  }
 
   // prepare iterator
   UErrorCode err = U_ZERO_ERROR;
@@ -52,43 +51,37 @@ SplitWords(const v8::Arguments &args) {
     ErrorCode errCode;
     errCode.set(err);
 
-    return Throw(errCode.errorName());
+    Nan::ThrowError(errCode.errorName());
+    delete cTextArg;
+    return;
   }
 
   iter->setText(uTextArg);
 
   // iterate and store results
-  v8::Local<v8::Array> results = v8::Array::New();
+  Local<Array> results = Nan::New<Array>();
   int resultIdx = 0;
   int previousIdx = 0;
   int idx = -1;
 
   while ((idx = iter->next()) != -1) {
     const uint16_t *wordStart = cTextArg + previousIdx;
-    v8::Local<v8::String> word;
 
-    results->Set(resultIdx++, v8::String::New(wordStart, idx - previousIdx));
+    Nan::Set(results, resultIdx++, Nan::New<String>(wordStart, idx - previousIdx).ToLocalChecked());
     previousIdx = idx;
   }
 
   // finish
   delete iter;
-  return scope.Close(results);
+  delete cTextArg;
+  info.GetReturnValue().Set(results);
 }
 
-
-// module setup
-static void
-Init(v8::Handle<v8::Object> exports) {
-  v8::HandleScope scope;
-
-  if (!ft_splitWords_once) {
-    ft_splitWords = v8::Persistent<v8::FunctionTemplate>::New(v8::FunctionTemplate::New(SplitWords));
-    ft_splitWords_once = true;
-  }
-
-  exports->Set(v8::String::NewSymbol("splitWords"), ft_splitWords->GetFunction());
+void Init(Local<Object> exports) {
+    exports->Set(Nan::New("splitWords").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(SplitWords)->GetFunction());
 }
 
-NODE_MODULE(wordsplit, Init);
+NODE_MODULE(addon, Init)
 
+}
