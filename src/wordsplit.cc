@@ -3,6 +3,7 @@
 #include <unicode/brkiter.h>
 #include <unicode/errorcode.h>
 #include <unicode/unistr.h>
+#include <unicode/uvernum.h>
 
 namespace wordsplit {
 
@@ -35,7 +36,11 @@ void SplitWords(const Nan::FunctionCallbackInfo<Value>& info) {
     return;
   }
 
+#if U_ICU_VERSION_MAJOR_NUM >= 59
+  icu::UnicodeString uTextArg(reinterpret_cast<const char16_t *>(cTextArg), text->Length());
+#else
   icu::UnicodeString uTextArg(cTextArg, text->Length());
+#endif
   if (uTextArg.isBogus()) {
     Nan::ThrowError("Failed to create UnicodeString");
     delete cTextArg;
